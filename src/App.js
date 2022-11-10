@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import bakeryData from "./assets/bakery-data.json";
+import BakeryItem from "./components/BakeryItem";
 
 /* ####### DO NOT TOUCH -- this makes the image URLs work ####### */
 bakeryData.forEach((item) => {
@@ -9,20 +10,40 @@ bakeryData.forEach((item) => {
 /* ############################################################## */
 
 function App() {
-  // TODO: use useState to create a state variable to hold the state of the cart
   /* add your cart state code here */
+  const [myCart, setMyCart] = useState([]);
+  const addToCart = (item)  => {
+    setMyCart([...myCart, item]);
+  }
+  const clearCart = () => {
+    setMyCart([]);
+  };
 
   return (
     <div className="App">
-      <h1>My Bakery</h1> {/* TODO: personalize your bakery (if you want) */}
+      <h1>My Bakery argggghhh -- minimal personalization</h1> {/* TODO: personalize your bakery (if you want) */}
+      <h5>Click on the item to add it to cart!</h5>
 
-      {bakeryData.map((item, index) => ( // TODO: map bakeryData to BakeryItem components
-        <p>Bakery Item {index}</p> // replace with BakeryItem component
+      {bakeryData.map((item, index) => (
+        // <p>Bakery Item {index}</p> // replace with BakeryItem component
+        <BakeryItem item={item} onClick={addToCart} />
       ))}
 
       <div>
         <h2>Cart</h2>
-        {/* TODO: render a list of items in the cart */}
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <button onClick={clearCart}>Clear</button>
+          </tr>
+          {myCart.map((item, index) => ( 
+            <tr>
+              <td>{item.name}</td>
+              <td>{item.price}</td>
+            </tr>
+          ))}
+        </table>
       </div>
     </div>
   );
